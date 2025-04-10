@@ -1,7 +1,7 @@
 import axios, { InternalAxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
 
 const axiosHttp = axios.create({
-  baseURL: "https://jsonplaceholder.typicode.com/", 
+  baseURL: "https://67f62cc2913986b16fa70d44.mockapi.io/investment/", 
 });
 
 axiosHttp.interceptors.request.use(
