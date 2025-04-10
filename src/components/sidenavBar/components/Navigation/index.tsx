@@ -16,13 +16,13 @@ const items: NavItemType[] = [
     type: "link",
     label: "Dashboard",
     icon: MdOutlineSpaceDashboard,
-    path: "/dashboard",
+    path: "/investment-dasboard/dashboard",
   },
   {
     type: "link",
     label: "Invest",
     icon: MdOutlineShoppingBag,
-    path: "/investment",
+    path: "/investment-dasboard/investment",
   },
 ];
 
