@@ -8,7 +8,7 @@ const Routers = () => {
   return (
     <Routes>
     {/* Home Page - List of Users */}
-        <Route path='/investment-dasboard/' element={<IndexSidenavBar/>}>
+        <Route path='/' element={<IndexSidenavBar/>}>
             <Route path="" element={<IndexDashboard />} /> 
             <Route path="dashboard" element={<IndexDashboard />} /> 
             <Route path="investment" element={<IndexInvestment />} /> 
