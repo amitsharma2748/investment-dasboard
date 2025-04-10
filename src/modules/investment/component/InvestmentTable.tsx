@@ -18,9 +18,28 @@ import { RootState } from "../../../redux/store";
 import { API_STATUS_TYPE } from "../../../utils/globalTypes";
 import Loader from "../../../components/Loader";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { useTranslation } from "react-i18next";
+import {closestCenter, DndContext, DragEndEvent} from "@dnd-kit/core"
+import {arrayMove, SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable"
+import {CSS} from "@dnd-kit/utilities"
+
+const SortableUser=({investment}:{investment :fetchInvestmentSliceTypeListType})=>{
+  const {attributes,listeners,setNodeRef,transform,transition}= useSortable({id:investment?.id})
+  const styles={
+    transition,
+    transform:CSS.Transform.toString(transform)
+  }
+
+  return(
+    <Tr ref={setNodeRef} {...attributes} {...listeners} key={investment.id} style={styles}>
+    <Td>{investment?.name}</Td>
+    <Td>{investment?.amount}</Td>
+    <Td>{investment?.roi}</Td>
+  </Tr>
+  )
+}
 
 // Component to display investment table with pagination
 export const InvestmentTable = () => {
@@ -32,7 +51,46 @@ export const InvestmentTable = () => {
   );
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
+  const [displayData,setDisplayData]=useState<fetchInvestmentSliceTypeListType[]|null>(null)
   const itemsPerPage = 5;
+
+    // Pagination calculations
+    const totalItems = investmentListData?.length ||0;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = Math.min(startIndex + itemsPerPage, totalItems); 
+      const currentData :fetchInvestmentSliceTypeListType[]|null= investmentListData?.slice(startIndex, endIndex)||null;
+  
+    const emptyRowsCount = itemsPerPage - (currentData?.length ||0);
+    const emptyRows = Array(emptyRowsCount).fill({ id: `empty-${Math.random()}` }); 
+  
+    const onDragEnd=(event:DragEndEvent)=>{
+       const {active,over}=event
+       if(active.id===over?.id){
+        return
+       }
+        setDisplayData((investments :fetchInvestmentSliceTypeListType[]|null)=>{
+          if(investments){
+            const oldIndex=investments?.findIndex((investment)=>investment.id===active.id)
+          const newIndex=investments?.findIndex((investment)=>investment.id===over?.id)
+          return arrayMove(investments,oldIndex,newIndex)
+          }
+          return investments;
+          
+        }
+
+        )
+    }
+  
+    // Pagination handlers
+    const handlePrevious = () => setCurrentPage((prev) => Math.max(1, prev - 1));
+    const handleNext = () => setCurrentPage((prev) => Math.min(totalPages, prev + 1));
+  
+    useEffect(()=>{
+      if(currentData)
+      setDisplayData([...currentData])
+  
+    },[])
 
   // Loading state
   if (
@@ -52,26 +110,21 @@ export const InvestmentTable = () => {
     return <Text>No investment data available</Text>;
   }
 
-  // Pagination calculations
-  const totalItems = investmentListData.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
-  const currentData = investmentListData.slice(startIndex, endIndex);
 
-  const emptyRowsCount = itemsPerPage - currentData.length;
-  const emptyRows = Array(emptyRowsCount).fill({ id: `empty-${Math.random()}` });
-  const displayData: fetchInvestmentSliceTypeListType[] = [...currentData];
 
-  // Pagination handlers
-  const handlePrevious = () => setCurrentPage((prev) => Math.max(1, prev - 1));
-  const handleNext = () => setCurrentPage((prev) => Math.min(totalPages, prev + 1));
+  if(!displayData){
+    return(
+      <p>
+        No Data Found
+      </p>
+    )
+  }
 
   return (
     // Main container
     <Stack width="full" gap={1}>
       <TableContainer>
-        <Table variant="striped" size="lg" w="full">
+        <Table  variant="simple" color={"GrayText"} size="lg" w="full">
           {/* Table header */}
           <Thead background="blue.100">
             <Tr>
@@ -82,13 +135,15 @@ export const InvestmentTable = () => {
           </Thead>
           {/* Table body */}
           <Tbody>
-            {displayData.map((investment) => (
-              <Tr key={investment.id}>
-                <Td>{investment?.name}</Td>
-                <Td>{investment?.amount}</Td>
-                <Td>{investment?.roi}</Td>
-              </Tr>
-            ))}
+            <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd}>
+                <SortableContext items={displayData} strategy={verticalListSortingStrategy}>
+                    {displayData.map((investment) => (
+                      <SortableUser key={investment.id} investment={investment}/>
+                    ))}
+                </SortableContext>
+
+            </DndContext>
+           
             {displayData.length !== 5 &&
               emptyRows.map(() => (
                 <Tr key={nanoid()} h={16}>
