@@ -2,14 +2,13 @@ import {
   Box,
   Button,
   Input,
-  Text,
   VStack,
   FormControl,
   FormLabel,
   FormErrorMessage,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { InvestmentFormData } from "../InvestmentTypes";
 import { useTranslation } from "react-i18next";
 
@@ -18,9 +17,7 @@ const AddInvestmentForm = ({ investmentFormData }: { investmentFormData: ReturnT
   const { t } = useTranslation();
   const {
     register,
-    formState: { errors, isSubmitting },
-    setValue,
-    watch,
+    formState: { errors }, 
   } = investmentFormData;
 
   // State for file upload

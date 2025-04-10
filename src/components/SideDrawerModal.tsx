@@ -9,7 +9,7 @@ import {
   DrawerOverlay,
   Portal,
 } from "@chakra-ui/react"; // Use @chakra-ui/react
-import { ForwardedRef, ReactNode, forwardRef, useRef } from "react";
+import { ForwardedRef, ReactNode, forwardRef } from "react";
 
 type SideModalPropsType = {
   title: string;
@@ -23,8 +23,7 @@ const SideModal = forwardRef(
   (
     { title, isOpen, onClose, onSave, children }: SideModalPropsType,
     ref: ForwardedRef<HTMLDivElement>
-  ) => {
-    const btnRef = useRef<HTMLButtonElement>(null);
+  ) => { 
 
     return (
       <Drawer

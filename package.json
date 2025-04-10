@@ -1,9 +1,12 @@
 {
+  "homepage": "https://amitsharma2748.github.io/investment-dasboard",
   "name": "react-redux-explorer",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predeploy": "npm run build", 
+    "deploy": "gh-pages -d dist",  
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
@@ -21,6 +24,7 @@
     "@tailwindcss/vite": "^4.0.14",
     "axios": "^1.8.3",
     "framer-motion": "^12.6.3",
+    "gh-pages": "^6.3.0",
     "i18next": "^24.2.3",
     "i18next-browser-languagedetector": "^8.0.4",
     "install": "^0.13.0",

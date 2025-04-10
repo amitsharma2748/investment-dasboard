@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import { RootState, useAppDispatch } from "../../redux/store";
 import { fetchInvestmentList } from "../../redux/slice/investmentsListSlice";
 import { InvestmentTable } from "./component/InvestmentTable";

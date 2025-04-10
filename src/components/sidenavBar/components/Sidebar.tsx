@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, Select } from "@chakra-ui/react";
-import { AvatarBox } from "./AvatarBox";
+import { Box, Select } from "@chakra-ui/react"; 
 import { Logo } from "./Logo";
 import { Navigation } from "./Navigation";
 import { useTranslation } from "react-i18next";

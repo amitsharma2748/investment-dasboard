@@ -1,4 +1,4 @@
-import { List, ListItem, Text } from "@chakra-ui/react";
+import { List, ListItem } from "@chakra-ui/react";
 import { MdOutlineSpaceDashboard, MdOutlineShoppingBag } from "react-icons/md";
 import { IconType } from "react-icons"; // For icon typing
 import { NavItem } from "./NavItem";

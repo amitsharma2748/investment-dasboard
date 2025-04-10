@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosHttp from "../../utils/interceptors"; 
 import { API_STATUS_TYPE } from "../../utils/globalTypes"; 
 import { fetchInvestmentSliceType } from "../../modules/investment/InvestmentTypes";
@@ -36,7 +36,7 @@ const addInvestmentSlice = createSlice({
       .addCase(addInvestment.pending, (state) => {
         state.status = API_STATUS_TYPE.PENDING;
       })
-      .addCase(addInvestment.fulfilled, (state, action: PayloadAction<fetchInvestmentSliceType>) => {
+      .addCase(addInvestment.fulfilled, (state) => {
  
         state.status = API_STATUS_TYPE.SUCCESS;
         

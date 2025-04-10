@@ -1,6 +1,6 @@
-import { Box, Flex, Icon, IconButton, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, Text } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
-import { AiFillThunderbolt, AiOutlineSearch } from "react-icons/ai";
+import { AiFillThunderbolt } from "react-icons/ai";
 
 export const Logo = ({ collapse }:any) => {
   const {t}=useTranslation()

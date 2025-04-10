@@ -3,12 +3,9 @@ import {
   Box,
   Badge,
   Text,
-  Heading,
-  Select,
-} from "@chakra-ui/react";
-import React from "react";
-import { Link as RouterLink } from "react-router-dom";
-import i18n from "../../../../i18n";
+  Heading, 
+} from "@chakra-ui/react"; 
+import { Link as RouterLink } from "react-router-dom"; 
 import { useTranslation } from "react-i18next";
 
 // Props interface for navigation item

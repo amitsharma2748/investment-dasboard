@@ -1,5 +1,4 @@
-import { Box, Button, useDisclosure } from "@chakra-ui/react";
-import React from "react";
+import { Box, Button, useDisclosure } from "@chakra-ui/react"; 
 import SideModal from "../../../components/SideDrawerModal";
 import AddInvestmentForm from "./AddInvestmentForm";
 import { useForm } from "react-hook-form";

@@ -29,9 +29,7 @@ const investmentListSlice = createSlice({
   initialState,
   reducers: {
     resetInvestmentListSlice: () => initialState,
-    updateFilteredList:(state,{payload})=>{
-      // state.filteredList=payload
-    }
+     
  
   },
   extraReducers: (builder) => {
@@ -52,5 +50,5 @@ const investmentListSlice = createSlice({
   },
 });
 
-export const { resetInvestmentListSlice ,updateFilteredList} = investmentListSlice.actions;
+export const { resetInvestmentListSlice } = investmentListSlice.actions;
 export default investmentListSlice.reducer;
