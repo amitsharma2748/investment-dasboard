@@ -1,8 +1,4 @@
-Below is a complete `README.md` file tailored to your query, addressing the setup instructions, decisions and trade-offs, bonus tasks, and adhering to the grading criteria of readability, documentation clarity, and best practices.
 
----
-
-````markdown
 # React-Redux Explorer
 
 A React application built with Redux for state management, Chakra UI for styling, and React Router for navigation. This project demonstrates a simple investment management system with a focus on best practices, type safety, and clean architecture.
