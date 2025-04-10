@@ -5,16 +5,21 @@ import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { store } from './redux/store.ts'
-import { ChakraProvider ,defaultSystem } from '@chakra-ui/react'
+import { ChakraProvider  } from '@chakra-ui/react'
+import { NotificationProvider } from './components/NotificationProvider.tsx'
+import { SnackbarProvider } from 'notistack'
 
-
+// Import i18n configuration
+import './i18n.ts';
 
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
     <Provider store={store}>
-    <ChakraProvider value={defaultSystem}>
-      <App />
-    </ChakraProvider>
+      <SnackbarProvider>
+        <ChakraProvider >
+          <App />
+        </ChakraProvider>
+      </SnackbarProvider>
     </Provider>
   </BrowserRouter>,
 )

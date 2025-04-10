@@ -1,30 +1,57 @@
-import { Box, Button, Drawer } from '@chakra-ui/react'
-import React from 'react'
-import SideModal from '../../../components/SideDrawerModal'
-import AddInvestmentForm from './AddInvestmentForm'
+import { Box, Button, useDisclosure } from "@chakra-ui/react";
+import React from "react";
+import SideModal from "../../../components/SideDrawerModal";
+import AddInvestmentForm from "./AddInvestmentForm";
+import { useForm } from "react-hook-form";
+import { InvestmentFormData } from "../InvestmentTypes";
+import { investmentSchema } from "../yupValidators";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { addInvestment } from "../../../redux/slice/addInvestmentSlice";
+import { useAppDispatch } from "../../../redux/store";
+import { useTranslation } from "react-i18next";
 
+// Component for investment action bar
 const InvestmentActionBar = () => {
-    const handleSave=()=>{
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-    }
-    const handleClose=()=>{
+  // Form setup with Yup validation
+  const investmentFormData = useForm<InvestmentFormData>({
+    resolver: yupResolver(investmentSchema),
+  });
 
-    }
+  const { handleSubmit, reset } = investmentFormData;
+
+  // Handle form submission
+  const handleSave = async (data: InvestmentFormData) => {
+    dispatch(addInvestment(data));
+    reset();
+    onClose();
+  };
+
+  // Handle modal close
+  const handleClose = () => { 
+    onClose();
+  };
+
   return (
-    <Drawer.Root>
-        <Drawer.Trigger asChild>
-        <Box mb={4} display={'flex'} justifyContent={"flex-end"}>
-        <Button>Add Investment</Button>
-        </Box>
-      </Drawer.Trigger>
-        
-        <SideModal title='Add Investment' onSave={handleSave} onClose={handleClose}>
-            <AddInvestmentForm/>
-        </SideModal>
+    <>
+      {/* Action button container */}
+      <Box mb={4} display="flex" justifyContent="flex-end">
+        <Button onClick={onOpen}>{t("add") + " " + t("investment")}</Button>
+      </Box>
+      {/* Side modal for adding investments */}
+      <SideModal
+        title="Add Investment"
+        isOpen={isOpen}
+        onSave={handleSubmit(handleSave)}
+        onClose={handleClose}
+      >
+        <AddInvestmentForm investmentFormData={investmentFormData} />
+      </SideModal>
+    </>
+  );
+};
 
-    </Drawer.Root>
-    
-  )
-}
-
-export default InvestmentActionBar
+export default InvestmentActionBar;

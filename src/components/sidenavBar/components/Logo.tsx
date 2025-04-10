@@ -1,7 +1,10 @@
 import { Box, Flex, Icon, IconButton, Text } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 import { AiFillThunderbolt, AiOutlineSearch } from "react-icons/ai";
 
-export const Logo = ({ collapse }:any) => (
+export const Logo = ({ collapse }:any) => {
+  const {t}=useTranslation()
+  return(
   <Flex
     w="full"
     alignItems="center"
@@ -13,7 +16,7 @@ export const Logo = ({ collapse }:any) => (
       <Icon as={AiFillThunderbolt} fontSize={28} />
       {collapse && (
         <Text fontWeight="bold" fontSize={16}>
-          Investment Manager
+          {t('investment') +" "+t('manager') } 
         </Text>
       )}
     </Box>
@@ -27,3 +30,4 @@ export const Logo = ({ collapse }:any) => (
     /> */}
   </Flex>
 );
+}

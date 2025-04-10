@@ -6,6 +6,10 @@ export enum API_STATUS_TYPE{
     NOT_FOUND = "NOT_FOUND",
 }
 
-
+export enum NOTISTACK_VARIANT {
+    ERROR = "error",
+    SUCCESS = "success",
+    INFO = "info",
+}
 
 

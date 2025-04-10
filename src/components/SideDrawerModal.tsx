@@ -1,53 +1,64 @@
-// import { Drawer } from '@mui/material'
-import { Button, CloseButton, Drawer, Portal } from '@chakra-ui/react'
-import  { Children, ForwardedRef, ReactNode, forwardRef } from 'react'
+import {
+  Button,
+  CloseButton,
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  Portal,
+} from "@chakra-ui/react"; // Use @chakra-ui/react
+import { ForwardedRef, ReactNode, forwardRef, useRef } from "react";
 
-type SideModalPropsType = { 
-  title:string
-  onClose: () => void
-  onSave:()=>void
-  children: ReactNode
-}
+type SideModalPropsType = {
+  title: string;
+  isOpen: boolean;
+  onClose: () => void;
+  onSave: () => void;
+  children: ReactNode;
+};
 
-// Define styles in a separate object
-const getDrawerStyles ={
-  "& .MuiDrawer-paper": {
-    width: "400px", // Dynamic width 
-    padding: "16px",
-    transition: "0.3s ease-in-out",
-  },
-}
-
-// Forward ref to the Drawer component
 const SideModal = forwardRef(
-  ({ onSave, onClose,title, children }: SideModalPropsType, ref: ForwardedRef<HTMLDivElement>) => {
-
+  (
+    { title, isOpen, onClose, onSave, children }: SideModalPropsType,
+    ref: ForwardedRef<HTMLDivElement>
+  ) => {
+    const btnRef = useRef<HTMLButtonElement>(null);
 
     return (
-      
+      <Drawer
+        isOpen={isOpen}
+        placement="right"
+        onClose={onClose} 
+      >
         <Portal>
-         <Drawer.Backdrop />
-         <Drawer.Positioner>
-           <Drawer.Content>
-             <Drawer.Header>
-               <Drawer.Title>{title}</Drawer.Title>
-             </Drawer.Header>
-             <Drawer.Body>
-              {children}
-             </Drawer.Body>
-             <Drawer.Footer>
-               <Button variant="outline">Cancel</Button>
-               <Button type='submit'>Save</Button>
-             </Drawer.Footer>
-             <Drawer.CloseTrigger asChild>
-               <CloseButton size="sm" onClick={onClose}/>
-             </Drawer.CloseTrigger>
-           </Drawer.Content>
-         </Drawer.Positioner>
-         </Portal>
-    )
+          <DrawerOverlay />
+          <DrawerContent ref={ref}>
+            <DrawerHeader>{title}</DrawerHeader>
+            <DrawerBody>{children}</DrawerBody>
+            <DrawerFooter>
+              <Button variant="outline" onClick={onClose} mr={3}>
+                Cancel
+              </Button>
+              <Button colorScheme="blue" onClick={onSave}>
+                Save
+              </Button>
+            </DrawerFooter>
+            <CloseButton
+              size="sm"
+              onClick={onClose}
+              position="absolute"
+              top="8px"
+              right="8px"
+            /> {/* Replaced DrawerCloseTrigger */}
+          </DrawerContent>
+        </Portal>
+      </Drawer>
+    );
   }
-)
+);
 
+SideModal.displayName = "SideModal";
 
-export default SideModal
+export default SideModal;

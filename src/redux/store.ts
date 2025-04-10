@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit"; 
 import { useDispatch } from "react-redux";
 import investmentsListSlice from "./slice/investmentsListSlice"
-import userDetailSlice from "./slice/userDetailSlice"
+import addInvestmentSlice from "./slice/addInvestmentSlice"
 
 export const store=configureStore({
     reducer:{
         investmentList:investmentsListSlice,
-        userDetail:userDetailSlice
+        addInvestment:addInvestmentSlice
     }
 })
 

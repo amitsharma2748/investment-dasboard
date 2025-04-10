@@ -3,10 +3,14 @@ import React from "react";
 import { MdMenu } from "react-icons/md";
 import { Sidebar } from "./components/Sidebar";
 import { Outlet, useLocation } from "react-router-dom";
+import { HeaderValue } from "../../utils/contants";
+import { useTranslation } from "react-i18next";
 
  
 const IndexSidenavBar = () =>{
     const location=useLocation()
+    const headerText = HeaderValue[location.pathname] || " ";
+    const {t}=useTranslation()
     const [collapse, setCollapse] = React.useState(false);
     const isMobile = useBreakpointValue({ base: true, md: false });
   
@@ -55,7 +59,7 @@ const IndexSidenavBar = () =>{
 
           <Box w={"full"} display={"flex"} h={"full"} flexDir={"column"} justifyContent={"center"}>
             <Box p={4} display={"flex"}  justifyContent={"center"}>
-              <Text textStyle={"5xl"}>{location.pathname}</Text> 
+              <Text className="header-text" fontSize="4xl">{t(headerText.toLowerCase())}</Text> 
             </Box>
             <Box display={"flex"}  justifyContent={"flex-start"} flexDirection={"column"}  mt={15} p={2} w={"full"} h={"full"}> 
               <Outlet/>
