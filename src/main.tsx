@@ -12,7 +12,7 @@ import { SnackbarProvider } from 'notistack'
 import './i18n.ts';
 
 createRoot(document.getElementById('root')!).render(
-  <BrowserRouter>
+  <BrowserRouter basename='/investment-dasboard/'>
     <Provider store={store}>
       <SnackbarProvider>
         <ChakraProvider >
